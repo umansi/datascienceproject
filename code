@@ -1,48 +1,53 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from collections import Counter
 
-#Load the dataset
-df = pd.read_csv("XX50235metadata")
-print(df.head())
+df = pd.read_csv("XX50235metadata.csv")
 
-#Convert to DataFrame
-data = [line.split(',') for line in data.split('\n')]
-df = pd.DataFrame(data[1:], columns=data[0])
-df['Year'] = df['Year'].astype(int)  
-#Convert Year to integer
+#standardize Stx column
+def normalize_stx(stx_value):
+    if pd.isna(stx_value) or stx_value.strip() == "-" or stx_value.strip() == "":  # Handle NaN, "-" and empty strings
+        return stx_value
+    return " ".join(sorted(stx_value.lower().split()))  # Sort alphabetically and lowercase
+df["Stx"] = df["Stx"].astype(str).apply(normalize_stx)
+print(df["Stx"].unique())
+df.to_csv("cleaned_dataset.csv", index=False)
 
-#Country Distribution
-plt.figure(figsize=(10, 5))
-sns.countplot(x='Country', data=df, order=df['Country'].value_counts().index)
+#bar graph with countries on the x-axis and the count on the y-axis, colored by Stx type
+plt.figure(figsize=(12, 6))
+
+#different colors for each 'Stx' type
+sns.countplot(x="Region", data=df, hue="Stx", palette="Set1")
+
+#labels and titles
+plt.title("Region Distribution by Stx Type", fontsize=16)
+plt.xlabel("Region ", fontsize=12)
+plt.ylabel("Count", fontsize=12)
 plt.xticks(rotation=45)
-plt.title('Sample Distribution by Country')
+
+plt.legend(title="Stx Types", bbox_to_anchor=(1.05, 1), loc='upper left')
+
+plt.tight_layout()
 plt.show()
 
-#Year-wise Distribution
-plt.figure(figsize=(6, 4))
-sns.countplot(x='Year', data=df)
-plt.title('Samples Collected Each Year')
-plt.show()
+#pie chart for uk on max counts for a year
+# Filter data for UK
+df_uk = df[df["Region"] == "UK"]
 
-#Stx Gene Frequency
-all_genes = ' '.join(df['Stx']).replace('-', '').split()
-gene_counts = Counter(all_genes)
-plt.figure(figsize=(8, 5))
-sns.barplot(x=list(gene_counts.keys()), y=list(gene_counts.values()))
-plt.title('Frequency of Stx Genes')
-plt.show()
+#year with the max number of counts
+max_year = df_uk["Year"].value_counts().idxmax()
 
-#PT Type Distribution
-plt.figure(figsize=(10, 5))
-sns.countplot(y='PT', data=df, order=df['PT'].value_counts().index)
-plt.title('PT Type Distribution')
-plt.show()
+#Filter data for the year with the max counts
+df_uk_max_year = df_uk[df_uk["Year"] == max_year]
 
-#Regional Distribution
-plt.figure(figsize=(8, 8))
-df['Region'].value_counts().plot(kind='pie', autopct='%1.1f%%')
-plt.title('Sample Distribution by Region')
-plt.ylabel('')
+#Counts for each Stx type for the max year
+stx_counts = df_uk_max_year["Stx"].value_counts()
+
+#Plot the pie chart 
+plt.figure(figsize=(10, 8))
+plt.pie(stx_counts, labels=stx_counts.index, autopct='%1.1f%%', colors=plt.cm.Paired.colors[:len(stx_counts)])
+plt.title(f"Distribution of Stx Types in UK ({max_year})")
+plt.legend(stx_counts.index, title="Stx Types", loc="upper left", bbox_to_anchor=(1.05, 1))
+plt.axis('equal')  # Equal aspect ratio ensures the pie is drawn as a circle
+plt.tight_layout()
 plt.show()
