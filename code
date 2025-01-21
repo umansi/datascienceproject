@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
 
-# Step 1: Load the dataset
+#Load the dataset
 data = '''Accession,Country,Region,Year,Stx,PT
 SRR3530392,N,UK,2015,stx2a,PT 32
 SRR3530530,N,UK,2015,stx2a,PT 2
@@ -45,25 +45,25 @@ SRR3742277,N,UK,2016,stx2a stx2c,PT 32
 SRR3742278,N,UK,2016,stx2c,PT 34
 SRR3742279,Turkey,M. East,2016,stx2c,PT 34'''
 
-# Convert to DataFrame
+#Convert to DataFrame
 data = [line.split(',') for line in data.split('\n')]
 df = pd.DataFrame(data[1:], columns=data[0])
 df['Year'] = df['Year'].astype(int)  # Convert Year to integer
 
-# Step 2: Country Distribution
+#Country Distribution
 plt.figure(figsize=(10, 5))
 sns.countplot(x='Country', data=df, order=df['Country'].value_counts().index)
 plt.xticks(rotation=45)
 plt.title('Sample Distribution by Country')
 plt.show()
 
-# Step 3: Year-wise Distribution
+#Year-wise Distribution
 plt.figure(figsize=(6, 4))
 sns.countplot(x='Year', data=df)
 plt.title('Samples Collected Each Year')
 plt.show()
 
-# Step 4: Stx Gene Frequency
+#Stx Gene Frequency
 all_genes = ' '.join(df['Stx']).replace('-', '').split()
 gene_counts = Counter(all_genes)
 plt.figure(figsize=(8, 5))
@@ -71,13 +71,13 @@ sns.barplot(x=list(gene_counts.keys()), y=list(gene_counts.values()))
 plt.title('Frequency of Stx Genes')
 plt.show()
 
-# Step 5: PT Type Distribution
+#PT Type Distribution
 plt.figure(figsize=(10, 5))
 sns.countplot(y='PT', data=df, order=df['PT'].value_counts().index)
 plt.title('PT Type Distribution')
 plt.show()
 
-# Step 6: Regional Distribution
+#Regional Distribution
 plt.figure(figsize=(8, 8))
 df['Region'].value_counts().plot(kind='pie', autopct='%1.1f%%')
 plt.title('Sample Distribution by Region')
