@@ -1,0 +1,5 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+filename = 'XXX50235metadata'
+dataframe = pd.read_csv(filename)
