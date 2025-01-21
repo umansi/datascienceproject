@@ -4,46 +4,8 @@ import seaborn as sns
 from collections import Counter
 
 #Load the dataset
-data = '''Accession,Country,Region,Year,Stx,PT
-SRR3530392,N,UK,2015,stx2a,PT 32
-SRR3530530,N,UK,2015,stx2a,PT 2
-SRR3530616,N,UK,2015,stx2a,PT 8
-SRR3531422,Turkey,M. East,2015,stx2c stx1a,PT 8
-SRR3531744,N,UK,2015,stx2a stx2c stx1a,PT 8
-SRR3531853,Cyprus,S. Europe,2015,stx2c stx1a,PT 8
-SRR3531889,N,UK,2015,stx2a,PT 21/28
-SRR3531915,N,UK,2015,stx2a,PT 8
-SRR3579359,N,UK,2015,stx2a stx2c,
-SRR3742204,N,UK,2016,stx2c stx1a,PT 8
-SRR3742206,N,UK,2016,stx2a stx2c,PT 34
-SRR3742207,N,UK,2016,stx2a,PT 21/28
-SRR3742210,N,UK,2016,stx2c stx1a,PT 8
-SRR3742212,N,UK,2016,stx2c stx1a,PT 8
-SRR3742215,N,UK,2016,stx2c stx1a,PT 8
-SRR3742238,N,UK,2016,stx2c stx1a,PT 8
-SRR3742239,N,UK,2016,stx2a stx2c,PT 34
-SRR3742240,France,C. Europe,2016,stx2c stx1a,PT 54
-SRR3742243,Portugal,S. Europe,2016,stx2a stx2c,PT 34
-SRR3742244,N,UK,2016,stx2a stx2c,PT 34
-SRR3742245,N,UK,2016,stx2a,PT 21/28
-SRR3742247,N,UK,2016,stx2c,PT 4
-SRR3742248,N,UK,2016,stx2a stx2c,PT 31
-SRR3742250,N,UK,2016,stx2a stx2c,PT 34
-SRR3742252,N,UK,2016,stx2c stx1a,PT 8
-SRR3742253,N,UK,2016,stx2a stx2c,PT 34
-SRR3742254,N,UK,2016,stx2a stx2c,PT 34
-SRR3742255,N,UK,2016,stx2a stx2c,PT 34
-SRR3742256,N,UK,2016,stx2a stx2c,PT 34
-SRR3742257,Spain,S. Europe,2016,stx2a stx2c,PT 34
-SRR3742258,N,UK,2016,stx2a stx2c,PT 34
-SRR3742260,N,UK,2016,stx2a stx2c,PT 34
-SRR3742262,N,UK,2016,stx2a stx2c,PT 34
-SRR3742267,Cyprus,S. Europe,2016,stx2c stx1a,PT 8
-SRR3742275,N,UK,2016,stx2a stx1a,PT 32
-SRR3742276,N,UK,2016,-,PT 34
-SRR3742277,N,UK,2016,stx2a stx2c,PT 32
-SRR3742278,N,UK,2016,stx2c,PT 34
-SRR3742279,Turkey,M. East,2016,stx2c,PT 34'''
+df = pd.read_csv("XX50235metadata")
+print(df.head())
 
 #Convert to DataFrame
 data = [line.split(',') for line in data.split('\n')]
