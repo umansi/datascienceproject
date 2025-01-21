@@ -3,3 +3,10 @@ import matplotlib.pyplot as plt
 
 filename = 'XXX50235metadata'
 dataframe = pd.read_csv(filename)
+
+dataframe["DATE"] = pd.to_datetime(dataframe['DATE'], format="%Y-%m-%d")
+fig, ax = plt.subplots()
+ax.plot(dataframe["DATE"], dataframe["TMAX"])
+ax.plot(dataframe["DATE"], dataframe["TMIN"])
+fig.autofmt_xdate()
+fig.show()
