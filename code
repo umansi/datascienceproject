@@ -48,7 +48,8 @@ SRR3742279,Turkey,M. East,2016,stx2c,PT 34'''
 #Convert to DataFrame
 data = [line.split(',') for line in data.split('\n')]
 df = pd.DataFrame(data[1:], columns=data[0])
-df['Year'] = df['Year'].astype(int)  # Convert Year to integer
+df['Year'] = df['Year'].astype(int)  
+#Convert Year to integer
 
 #Country Distribution
 plt.figure(figsize=(10, 5))
